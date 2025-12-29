@@ -1,0 +1,13 @@
+Django>=4.2
+djangorestframework>=3.14
+python-dotenv
+djangorestframework-simplejwt
+twilio
+google-generativeai
+pymongo
+google-genai
+gunicorn
+pyzbar
+opencv-python
+redis
+django-redis

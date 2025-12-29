@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuitro Nutrition App - API Testing Homepage</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .endpoint-section {
+            margin-bottom: 40px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .endpoint-title {
+            color: #34495e;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .method-badge {
+            background: #3498db;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .file-input {
+            padding: 5px;
+        }
+
+        .btn {
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background: #229954;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .hint-btn {
+            background: #f39c12;
+            font-size: 12px;
+            padding: 5px 10px;
+        }
+
+        .hint-btn:hover {
+            background: #e67e22;
+        }
+
+        .response-area {
+            margin-top: 20px;
+            padding: 15px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .loading {
+            display: none;
+            color: #3498db;
+            font-style: italic;
+        }
+
+        .hint-content {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+        }
+
+        .hint-content.show {
+            display: block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .auth-token {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍎 Nuitro Nutrition App - API Testing Homepage</h1>
+
+        <div class="auth-token">
+            <strong>Current Auth Token:</strong> <span id="current-token">Not set</span>
+            <button class="btn btn-secondary" onclick="clearToken()">Clear Token</button>
+        </div>
+
+        <div class="grid">
+            <!-- User Authentication Endpoints -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>User Signup</span>
+                    <span class="method-badge">POST /signupdetails</span>
+                </div>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number:</label>
+                        <input type="text" name="mobile_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">Test Signup</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('signup-hint')">Hint</button>
+                    <div class="loading" id="signup-loading">Testing...</div>
+                    <div class="response-area" id="signup-response"></div>
+                </form>
+                <div class="hint-content" id="signup-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "email": "test@example.com",
+  "full_name": "Test User",
+  "mobile_number": "1234567890",
+  "password": "password123"
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "Signup successful",
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code>
+                </div>
+            </div>
+
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>User Login</span>
+                    <span class="method-badge">POST /login</span>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn">Test Login</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('login-hint')">Hint</button>
+                    <div class="loading" id="login-loading">Testing...</div>
+                    <div class="response-area" id="login-response"></div>
+                </form>
+                <div class="hint-content" id="login-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "email": "test@example.com",
+  "password": "password123"
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "Login successful",
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code>
+                </div>
+            </div>
+
+            <!-- Food Analysis Endpoints -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Multi-Food Detection</span>
+                    <span class="method-badge">POST /multifooddetection</span>
+                </div>
+                <form id="multifood-form">
+                    <div class="form-group">
+                        <label>Image File:</label>
+                        <input type="file" name="image" accept="image/*" class="file-input" required>
+                    </div>
+                    <button type="submit" class="btn">Test Multi-Food Detection</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('multifood-hint')">Hint</button>
+                    <div class="loading" id="multifood-loading">Testing...</div>
+                    <div class="response-area" id="multifood-response"></div>
+                </form>
+                <div class="hint-content" id="multifood-hint">
+                    <strong>Request:</strong> Upload an image containing multiple food items<br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "food_groups": ["Pizza", "Salad", "Bread"]
+}</code>
+                </div>
+            </div>
+
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Nutrition Info Extraction</span>
+                    <span class="method-badge">POST /nutritioninfo</span>
+                </div>
+                <form id="nutrition-form">
+                    <div class="form-group">
+                        <label>Image File:</label>
+                        <input type="file" name="image" accept="image/*" class="file-input" required>
+                    </div>
+                    <button type="submit" class="btn">Test Nutrition Extraction</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('nutrition-hint')">Hint</button>
+                    <div class="loading" id="nutrition-loading">Testing...</div>
+                    <div class="response-area" id="nutrition-response"></div>
+                </form>
+                <div class="hint-content" id="nutrition-hint">
+                    <strong>Request:</strong> Upload a food image<br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "status": "success",
+  "data": {
+    "food_name": "Pasta with Tomato Sauce",
+    "serving_size": "1 cup (250g)",
+    "meal_info": {
+      "calories": 350,
+      "protein": 12,
+      "carbs": 55,
+      "fat": 8,
+      "meal": "Lunch"
+    },
+    "nutrition_data": {
+      "energy": 1464,
+      "fat": 8.2,
+      "saturated_fat": 1.5,
+      "fiber": 4.2,
+      "sugar": 8.5,
+      "sodium": 680
+    }
+  }
+}</code>
+                </div>
+            </div>
+
+            <!-- Food Logging Endpoints -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Log Food Intake</span>
+                    <span class="method-badge">POST /foodlog</span>
+                </div>
+                <form id="foodlog-form">
+                    <div class="form-group">
+                        <label>Nutrition Data (JSON):</label>
+                        <textarea name="data" rows="6" placeholder='{"food_name": "Apple", "calories": 95, "protein": 0.5, "carbs": 25, "fat": 0.3}' required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Test Food Logging</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('foodlog-hint')">Hint</button>
+                    <div class="loading" id="foodlog-loading">Testing...</div>
+                    <div class="response-area" id="foodlog-response"></div>
+                </form>
+                <div class="hint-content" id="foodlog-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "data": {
+    "food_name": "Grilled Chicken Breast",
+    "calories": 165,
+    "protein": 31,
+    "carbs": 0,
+    "fat": 3.6
+  }
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "Log saved successfully"
+}</code>
+                </div>
+            </div>
+
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Get Daily Food Logs</span>
+                    <span class="method-badge">GET /getfoodlog/&lt;date&gt;/</span>
+                </div>
+                <form id="foodlogs-form">
+                    <div class="form-group">
+                        <label>Date (YYYY-MM-DD):</label>
+                        <input type="text" name="date" value="2024-01-15" required>
+                    </div>
+                    <button type="submit" class="btn">Test Get Food Logs</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('foodlogs-hint')">Hint</button>
+                    <div class="loading" id="foodlogs-loading">Testing...</div>
+                    <div class="response-area" id="foodlogs-response"></div>
+                </form>
+                <div class="hint-content" id="foodlogs-hint">
+                    <strong>Request:</strong> GET /getfoodlog/2024-01-15/<br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "date": "2024-01-15",
+  "foodlogs": [...],
+  "Total calories": 2097,
+  "Calories consumed": 450
+}</code>
+                </div>
+            </div>
+
+            <!-- Barcode Scanning -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Barcode Scanning</span>
+                    <span class="method-badge">POST /barcodescan</span>
+                </div>
+                <form id="barcode-form">
+                    <div class="form-group">
+                        <label>Barcode Image:</label>
+                        <input type="file" name="image" accept="image/*" class="file-input" required>
+                    </div>
+                    <button type="submit" class="btn">Test Barcode Scan</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('barcode-hint')">Hint</button>
+                    <div class="loading" id="barcode-loading">Testing...</div>
+                    <div class="response-area" id="barcode-response"></div>
+                </form>
+                <div class="hint-content" id="barcode-hint">
+                    <strong>Request:</strong> Upload an image with a barcode<br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "status": "success",
+  "data": {
+    "food_name": "Coca Cola",
+    "serving_size": "Full Served • 250 g",
+    "nutrition_data": {
+      "calories": 42,
+      "sugar": 10.6,
+      "sodium": 10
+    }
+  }
+}</code>
+                </div>
+            </div>
+
+            <!-- Food Recommendations -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Food Predictions</span>
+                    <span class="method-badge">GET /getfoodpredictions/&lt;date&gt;/</span>
+                </div>
+                <form id="predictions-form">
+                    <div class="form-group">
+                        <label>Date (YYYY-MM-DD):</label>
+                        <input type="text" name="date" value="2024-01-15" required>
+                    </div>
+                    <button type="submit" class="btn">Test Food Predictions</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('predictions-hint')">Hint</button>
+                    <div class="loading" id="predictions-loading">Testing...</div>
+                    <div class="response-area" id="predictions-response"></div>
+                </form>
+                <div class="hint-content" id="predictions-hint">
+                    <strong>Request:</strong> GET /getfoodpredictions/2024-01-15/<br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "date": "2024-01-15",
+  "user_id": "USR12345",
+  "recommendations": [
+    "Oatmeal with Berries",
+    "Sweet Potato and Black Bean Bowl",
+    "Whole Wheat Pasta with Marinara"
+  ]
+}</code>
+                </div>
+            </div>
+
+            <!-- OTP Endpoints -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Send Email OTP</span>
+                    <span class="method-badge">POST /sendemailotp</span>
+                </div>
+                <form id="emailotp-form">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn">Test Send Email OTP</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('emailotp-hint')">Hint</button>
+                    <div class="loading" id="emailotp-loading">Testing...</div>
+                    <div class="response-area" id="emailotp-response"></div>
+                </form>
+                <div class="hint-content" id="emailotp-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "email": "test@example.com"
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "OTP sent successfully"
+}</code>
+                </div>
+            </div>
+
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Verify Email OTP</span>
+                    <span class="method-badge">POST /verifyemailotp</span>
+                </div>
+                <form id="verifyotp-form">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>OTP:</label>
+                        <input type="text" name="otp" required>
+                    </div>
+                    <button type="submit" class="btn">Test Verify Email OTP</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('verifyotp-hint')">Hint</button>
+                    <div class="loading" id="verifyotp-loading">Testing...</div>
+                    <div class="response-area" id="verifyotp-response"></div>
+                </form>
+                <div class="hint-content" id="verifyotp-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "email": "test@example.com",
+  "otp": "123456"
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "OTP verification successful"
+}</code>
+                </div>
+            </div>
+
+            <!-- Profile Management -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Save User Profile</span>
+                    <span class="method-badge">POST /userprofileinfo</span>
+                </div>
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <select name="gender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Age:</label>
+                        <input type="number" name="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg):</label>
+                        <input type="number" step="0.1" name="weight" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Height (cm):</label>
+                        <input type="number" step="0.1" name="height" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Goal:</label>
+                        <select name="primary_goal" required>
+                            <option value="Weight Loss">Weight Loss</option>
+                            <option value="Weight Gain">Weight Gain</option>
+                            <option value="Maintenance">Maintenance</option>
+                            <option value="Muscle Building">Muscle Building</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Medical Condition:</label>
+                        <input type="text" name="medical_condition">
+                    </div>
+                    <div class="form-group">
+                        <label>Food Preference:</label>
+                        <input type="text" name="food_preference">
+                    </div>
+                    <div class="form-group">
+                        <label>Mode of Progress:</label>
+                        <select name="mode_of_progress" required>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Test Save Profile</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('profile-hint')">Hint</button>
+                    <div class="loading" id="profile-loading">Testing...</div>
+                    <div class="response-area" id="profile-response"></div>
+                </form>
+                <div class="hint-content" id="profile-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "gender": "Male",
+  "age": 25,
+  "weight": 70.5,
+  "height": 175.0,
+  "primary_goal": "Weight Loss",
+  "medical_condition": "None",
+  "food_preference": "Vegetarian",
+  "mode_of_progress": "Beginner"
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "message": "User profile updated successfully."
+}</code>
+                </div>
+            </div>
+
+            <!-- Token Refresh -->
+            <div class="endpoint-section">
+                <div class="endpoint-title">
+                    <span>Token Refresh</span>
+                    <span class="method-badge">POST /api/token/refresh/</span>
+                </div>
+                <form id="refresh-form">
+                    <div class="form-group">
+                        <label>Refresh Token:</label>
+                        <textarea name="refresh" rows="3" placeholder="Paste your refresh token here..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Test Token Refresh</button>
+                    <button type="button" class="btn btn-secondary hint-btn" onclick="toggleHint('refresh-hint')">Hint</button>
+                    <div class="loading" id="refresh-loading">Testing...</div>
+                    <div class="response-area" id="refresh-response"></div>
+                </form>
+                <div class="hint-content" id="refresh-hint">
+                    <strong>Request Example:</strong><br>
+                    <code>{
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code><br><br>
+                    <strong>Response Example:</strong><br>
+                    <code>{
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+}</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Store current auth token
+        let currentToken = localStorage.getItem('authToken') || '';
+
+        function updateTokenDisplay() {
+            document.getElementById('current-token').textContent = currentToken || 'Not set';
+        }
+
+        function clearToken() {
+            currentToken = '';
+            localStorage.removeItem('authToken');
+            updateTokenDisplay();
+        }
+
+        function toggleHint(hintId) {
+            const hint = document.getElementById(hintId);
+            hint.classList.toggle('show');
+        }
+
+        function showLoading(formId, show) {
+            document.getElementById(formId + '-loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showResponse(formId, response) {
+            const responseArea = document.getElementById(formId + '-response');
+            responseArea.textContent = JSON.stringify(response, null, 2);
+        }
+
+        function makeRequest(formId, endpoint, method = 'POST') {
+            showLoading(formId, true);
+
+            const form = document.getElementById(formId + '-form');
+            const formData = new FormData(form);
+
+            let options = {
+                method: method,
+                headers: {}
+            };
+
+            // Add auth token if available
+            if (currentToken && formId !== 'signup' && formId !== 'login') {
+                options.headers['Authorization'] = `Bearer ${currentToken}`;
+            }
+
+            // Handle different request types
+            if (method === 'POST' && formData.has('image')) {
+                // File upload
+                options.body = formData;
+            } else if (method === 'GET') {
+                // GET request with query params
+                const params = new URLSearchParams();
+                for (let [key, value] of formData.entries()) {
+                    params.append(key, value);
+                }
+                endpoint += '?' + params.toString();
+            } else {
+                // JSON request
+                const jsonData = {};
+                for (let [key, value] of formData.entries()) {
+                    jsonData[key] = value;
+                }
+                options.headers['Content-Type'] = 'application/json';
+                options.body = JSON.stringify(jsonData);
+            }
+
+            return fetch(`/api${endpoint}`, options)
+                .then(response => response.json())
+                .then(data => {
+                    showResponse(formId, data);
+                    showLoading(formId, false);
+
+                    // Store token if login/signup successful
+                    if ((formId === 'login' || formId === 'signup') && data.access) {
+                        currentToken = data.access;
+                        localStorage.setItem('authToken', currentToken);
+                        updateTokenDisplay();
+                    }
+
+                    return data;
+                })
+                .catch(error => {
+                    showResponse(formId, { error: error.message });
+                    showLoading(formId, false);
+                });
+        }
+
+        // Form event listeners
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('signup', '/signupdetails');
+        });
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('login', '/login');
+        });
+
+        document.getElementById('multifood-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('multifood', '/multifooddetection');
+        });
+
+        document.getElementById('nutrition-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('nutrition', '/nutritioninfo');
+        });
+
+        document.getElementById('foodlog-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('foodlog', '/foodlog');
+        });
+
+        document.getElementById('foodlogs-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const date = form.querySelector('[name="date"]').value;
+            makeRequest('foodlogs', `/getfoodlog/${date}/`, 'GET');
+        });
+
+        document.getElementById('barcode-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('barcode', '/barcodescan');
+        });
+
+        document.getElementById('predictions-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const date = form.querySelector('[name="date"]').value;
+            makeRequest('predictions', `/getfoodpredictions/${date}/`, 'GET');
+        });
+
+        document.getElementById('emailotp-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('emailotp', '/sendemailotp');
+        });
+
+        document.getElementById('verifyotp-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('verifyotp', '/verifyemailotp');
+        });
+
+        document.getElementById('profile-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('profile', '/userprofileinfo');
+        });
+
+        document.getElementById('refresh-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            makeRequest('refresh', '/token/refresh/');
+        });
+
+        // Initialize token display
+        updateTokenDisplay();
+    </script>
+</body>
+</html>

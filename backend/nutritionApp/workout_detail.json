@@ -1,0 +1,157 @@
+[
+  {
+    "slug": "bicep",
+    "name": "Bicep",
+    "summary": "Strengthen and define your upper arms with focused bicep exercises.",
+    "details": "This workout improves arm strength, boosts muscle endurance, and enhances pulling power. Suitable for beginners to advanced users. Perform using dumbbells, cables, or resistance bands for best results.",
+    "information": [
+      "Improves arm strength, muscle endurance, and pulling power.",
+      "Appropriate for beginners through advanced athletes.",
+      "Uses dumbbells, cables, or resistance bands."
+    ],
+    "goals": [
+      "Muscle Gain",
+      "Strength Training"
+    ],
+    "calories_last_7_days": 210.0,
+    "calories_all_time": 68.4,
+    "calories_average": 70.0,
+    "image_url": "https://cdn.pixabay.com/photo/2017/08/06/01/35/bodybuilder-2588256_1280.jpg"
+  },
+  {
+    "slug": "body-back",
+    "name": "Body-Back",
+    "summary": "Shift stubborn body fat and build lean muscle with this total-body back workout.",
+    "details": "Ideal for developing posture, spinal support, and overall strength. Includes exercises like pull-downs, rows, and hyperextensions. Great for both fat loss and balanced muscle symmetry.",
+    "information": [
+      "Improves posture, spinal support, and overall strength.",
+      "Incorporates pull-downs, rows, and hyperextensions.",
+      "Supports fat loss and balanced muscle symmetry."
+    ],
+    "goals": [
+      "Heart Health",
+      "Weight Maintenance"
+    ],
+    "calories_last_7_days": 246.0,
+    "calories_all_time": 84.0,
+    "calories_average": 72.0,
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/19/14/00/fitness-1839081_1280.jpg"
+  },
+  {
+    "slug": "body-butt",
+    "name": "Body-Butt",
+    "summary": "Focused glute and lower-body workout to tone and lift.",
+    "details": "Strengthens hips, thighs, and improves balance and stability. Perfect for sculpting curves and supporting posture. Includes squats, hip thrusts, and lunges.",
+    "information": [
+      "Targets glutes, hips, and thighs for enhanced strength.",
+      "Improves balance, stability, and posture.",
+      "Features squats, hip thrusts, and lunges."
+    ],
+    "goals": [
+      "Glute Toning",
+      "Lower Body Strength"
+    ],
+    "calories_last_7_days": 190.0,
+    "calories_all_time": 72.0,
+    "calories_average": 64.0,
+    "image_url": "https://cdn.pixabay.com/photo/2016/03/27/19/39/training-1284646_1280.jpg"
+  },
+  {
+    "slug": "legs-core",
+    "name": "Legs & Core",
+    "summary": "A compound workout for stronger legs and a stable core.",
+    "details": "Boosts endurance, coordination, and muscle balance. Combines lunges, squats, planks, and leg raises. Ideal for athletes and general fitness goals.",
+    "information": [
+      "Builds lower-body strength and core stability.",
+      "Enhances endurance, coordination, and balance.",
+      "Includes lunges, squats, planks, and leg raises."
+    ],
+    "goals": [
+      "Strength",
+      "Stability",
+      "Endurance"
+    ],
+    "calories_last_7_days": 280.0,
+    "calories_all_time": 102.0,
+    "calories_average": 85.0,
+    "image_url": "https://cdn.pixabay.com/photo/2017/08/06/01/35/gym-2588062_1280.jpg"
+  },
+  {
+    "slug": "pectoral-machine",
+    "name": "Pectoral Machine",
+    "summary": "Build and tone your chest muscles using controlled resistance.",
+    "details": "Helps define pecs, shoulders, and triceps while improving posture. A safe and effective machine-based exercise for all fitness levels. Combine with push-ups or chest fly for variation.",
+    "information": [
+      "Defines chest, shoulders, and triceps.",
+      "Supports better posture with guided resistance.",
+      "Pairs well with push-ups and chest fly variations."
+    ],
+    "goals": [
+      "Muscle Gain",
+      "Upper Body Strength"
+    ],
+    "calories_last_7_days": 225.0,
+    "calories_all_time": 88.0,
+    "calories_average": 74.0,
+    "image_url": "https://cdn.pixabay.com/photo/2017/08/06/01/34/training-2588099_1280.jpg"
+  },
+  {
+    "slug": "weight-bench",
+    "name": "Weight Bench",
+    "summary": "A versatile workout for chest, triceps, shoulders, and back.",
+    "details": "Incorporates bench presses, dumbbell fly, and incline variations. Builds functional strength and muscle endurance. Perfect for full-body toning and core stability.",
+    "information": [
+      "Covers chest, triceps, shoulders, and back training.",
+      "Uses presses, dumbbell fly, and incline variations.",
+      "Improves full-body toning and core stability."
+    ],
+    "goals": [
+      "Strength Training",
+      "Endurance"
+    ],
+    "calories_last_7_days": 260.0,
+    "calories_all_time": 96.0,
+    "calories_average": 78.0,
+    "image_url": "https://cdn.pixabay.com/photo/2016/11/22/23/56/bench-1850925_1280.jpg"
+  },
+  {
+    "slug": "weight-loss",
+    "name": "Weight Loss",
+    "summary": "A dynamic mix of cardio, HIIT, and light resistance exercises to accelerate fat burning.",
+    "details": "Enhances metabolism, stamina, and energy levels. Works well with diet control and hydration tracking. Great for anyone looking to drop fat and stay fit.",
+    "information": [
+      "Combines cardio, HIIT, and light resistance work.",
+      "Boosts metabolism, stamina, and energy.",
+      "Pairs effectively with diet control and hydration tracking."
+    ],
+    "goals": [
+      "Fat Loss",
+      "Metabolic Boost",
+      "Stamina"
+    ],
+    "calories_last_7_days": 310.0,
+    "calories_all_time": 115.0,
+    "calories_average": 92.0,
+    "image_url": "https://cdn.pixabay.com/photo/2016/03/26/22/20/training-1284656_1280.jpg"
+  },
+  {
+    "slug": "woman-up-front",
+    "name": "Woman Up Front",
+    "summary": "Designed specifically for women focusing on full-body toning and confidence.",
+    "details": "Includes functional training, glute work, and light resistance moves. Improves strength, flexibility, and balance. Can be customized for all fitness levels.",
+    "information": [
+      "Targets full-body toning with a focus on confidence.",
+      "Blends functional training, glute work, and light resistance.",
+      "Adaptable for every fitness level while improving strength and balance."
+    ],
+    "goals": [
+      "Body Toning",
+      "Core Strength",
+      "Confidence"
+    ],
+    "calories_last_7_days": 275.0,
+    "calories_all_time": 98.0,
+    "calories_average": 81.0,
+    "image_url": "https://cdn.pixabay.com/photo/2017/08/07/22/51/girl-2604749_1280.jpg"
+  }
+]
